@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>AWS amplify auth</Text>
-      <Link href="/protect/protected">Protected</Link>
+      <Link href="/protected">Protected</Link>
       <StatusBar style="auto" />
     </View>
   );
