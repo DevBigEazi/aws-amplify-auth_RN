@@ -1,11 +1,17 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
+import {
+  useAuthenticator,
+} from "@aws-amplify/ui-react-native";
 
 const Protected = () => {
+  const { signOut } = useAuthenticator();
   return (
     <View style={style.container}>
       <Text style={style.text}>
         Hello, you are seeing this page because you are authenticated
       </Text>
+
+      <Button title="sign out" onPress={() => signOut()} />
     </View>
   );
 };
