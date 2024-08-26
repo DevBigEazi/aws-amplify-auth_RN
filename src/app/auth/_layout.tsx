@@ -9,5 +9,10 @@ export default function AuthLayout() {
 
   if (authStatus === "authenticated") return <Redirect href="/protected" />;
 
-  return <Slot />;
+  return (
+    <Stack>
+      <Stack.Screen name="sign-in" />
+      <Stack.Screen name="sign-up" options={{title: ""}}/>
+    </Stack>
+  );
 }

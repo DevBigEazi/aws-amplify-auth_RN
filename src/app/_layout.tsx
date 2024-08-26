@@ -9,9 +9,7 @@ Amplify.configure(amplifyconfig);
 export default function App() {
   return (
     <Authenticator.Provider>
-      <Stack>
-        <Stack.Screen name="index" options={{ title: "Onboard" }} />
-      </Stack>
+      <Slot/>
     </Authenticator.Provider>
   );
 }

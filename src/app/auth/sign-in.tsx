@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, TextInput, Button } from "react-native";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 
-import { signIn } from "aws-amplify/auth";
+import { resendSignUpCode, signIn } from "aws-amplify/auth";
 
 const SignIn = () => {
   const [form, setForm] = useState({
@@ -12,6 +12,8 @@ const SignIn = () => {
   const [error, setError] = useState("");
 
   const handleSignIn = async () => {
+    setError("");
+
     try {
       const { isSignedIn, nextStep } = await signIn({
         username: form.email,
@@ -19,9 +21,19 @@ const SignIn = () => {
       });
 
       if (isSignedIn) return router.push("/protected");
-      else return "Something went wrong" + nextStep.signInStep;
+      if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
+        await resendSignUpCode({
+          username: form.email,
+        });
+        router.push({
+          pathname: "/auth/verify-email",
+          params: { email: form.email },
+        });
+      }
+      //   else return setError("Something went wrong " + nextStep.signInStep);
     } catch (error) {
       setError(error.message);
+      console.log(error);
     }
   };
 
